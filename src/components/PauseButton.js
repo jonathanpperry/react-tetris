@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyledStartButton } from "./styles/StyledStartButton";
 
 const PauseButton = ({ callback, isPaused }) => (
