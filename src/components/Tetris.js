@@ -40,8 +40,8 @@ const Tetris = () => {
   const startGame = () => {
     // Reset everything
     setStage(createStage());
-    setDropTime(200);
-    setCurLevelDropTime(200);
+    setDropTime(1000);
+    setCurLevelDropTime(1000);
     resetPlayer();
     setGameOver(false);
     setScore(0);
@@ -66,8 +66,10 @@ const Tetris = () => {
     if (rows > (level + 1) * 10) {
       setLevel((prev) => prev + 1);
       // Also increase speed
-      setDropTime(1000 / (level + 1) + 200);
-    }
+      const newDropTime = 1000 / (level + 1) + 200;
+      setDropTime(newDropTime);
+      setCurLevelDropTime(newDropTime);
+  }
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
@@ -87,7 +89,6 @@ const Tetris = () => {
       if (keyCode === 40) {
         const newDropTime = 1000 / (level + 1) + 200;
         setDropTime(newDropTime);
-        setCurLevelDropTime(newDropTime);
       }
     }
   };
