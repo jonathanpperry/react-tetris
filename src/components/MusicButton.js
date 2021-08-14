@@ -12,7 +12,7 @@ const MusicButton = ({ callback, isPlayingMusic }) => (
       callback();
     }}
   >
-    {isPlayingMusic ? "Pause" : "Play"}
+    {isPlayingMusic ? "Play" : "Pause"}
   </StyledMusicButton>
 );
 
