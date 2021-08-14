@@ -16,12 +16,19 @@ import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
 import PauseButton from "./PauseButton";
+import MusicButton from "./MusicButton";
+
+// Music
+import Sound from "react-sound";
+import Falling from "../music/falling.mp3"
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   // Variable to track drop speed for pause
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const [curLevelDropTime, setCurLevelDropTime] = useState(null);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
@@ -59,6 +66,12 @@ const Tetris = () => {
     // Flip value of is paused
     setIsPaused(!isPaused);
     console.log("is paused: ", isPaused);
+  };
+
+  const togglePlayMusic = () => {
+    // Flip value to play or stop
+    setIsPlaying(!isPlaying);
+    console.log("is playing music: ", isPlaying);
   };
 
   const drop = () => {
@@ -139,6 +152,13 @@ const Tetris = () => {
           )}
           <StartButton callback={startGame} />
           <PauseButton callback={togglePauseGame} isPaused={isPaused} />
+          <MusicButton callback={togglePlayMusic} isPlaying={isPlaying} />
+          <Sound
+            url = {Falling}
+            playStatus = {
+              isPlaying ? Sound.status.PLAYING : Sound.status.STOPPED
+            }
+            playFromPosition={100} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
