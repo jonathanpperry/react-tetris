@@ -12,15 +12,21 @@ const MusicButton = ({ callback, isPlayingMusic }) => (
       callback();
     }}
   >
-  <Sound
-    url = {Falling}
-    playStatus = {
-      isPlayingMusic ? Sound.status.PLAYING : Sound.status.STOPPED
-    }
-    playFromPosition={100} />
-
-    {isPlayingMusic ? "Stop" : "Play"}
+    {isPlayingMusic ? "Pause" : "Play"}
   </StyledMusicButton>
 );
 
-export default MusicButton;
+const PlayMusic = React.memo(({isPlayingMusic}) => {
+  return   <Sound
+  url = {Falling}
+  playStatus = {
+    isPlayingMusic ? Sound.status.PLAYING : Sound.status.PAUSED
+  }
+  loop = {true}
+  position={100} />;
+})
+
+export {
+  MusicButton,
+  PlayMusic
+}

@@ -16,7 +16,7 @@ import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
 import PauseButton from "./PauseButton";
-import MusicButton from "./MusicButton";
+import {MusicButton, PlayMusic} from "./MusicButton";
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
@@ -24,7 +24,7 @@ const Tetris = () => {
   // Variable to track drop speed for pause
   const [isPaused, setIsPaused] = useState(false);
 
-  const [isPlayingMusic, setisPlayingMusic] = useState(false);
+  const [isPlayingMusic, setisPlayingMusic] = useState(true);
 
   const [curLevelDropTime, setCurLevelDropTime] = useState(null);
 
@@ -150,6 +150,7 @@ const Tetris = () => {
           <StartButton callback={startGame} />
           <PauseButton callback={togglePauseGame} isPaused={isPaused} />
           <MusicButton callback={togglePlayMusic} isPlayingMusic={isPlayingMusic} />
+          <PlayMusic isPlayingMusic={isPlayingMusic}/>
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
