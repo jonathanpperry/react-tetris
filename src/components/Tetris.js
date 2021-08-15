@@ -150,10 +150,9 @@ const Tetris = () => {
           <StartButton callback={startGame} />
           <PauseButton callback={togglePauseGame} isPaused={isPaused} />
           <MusicButton
-            callback={togglePlayMusic}
-            isPlayingMusic={isPlayingMusic}
+            // callback={togglePlayMusic}
+            // isPlayingMusic={isPlayingMusic}
           />
-          <PlayMusic isPlayingMusic={isPlayingMusic} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>

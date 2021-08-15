@@ -1,30 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // Music
-import Sound from "react-sound";
 import Falling from "../music/falling.mp3";
+
+import { PauseCircleFilled, PlayCircleFilled } from "@ant-design/icons";
 
 import { StyledMusicButton } from "./styles/StyledMusicButton";
 
-const MusicButton = ({ callback, isPlayingMusic }) => (
-  <StyledMusicButton
-    onClick={() => {
-      callback();
-    }}
-  >
-    {isPlayingMusic ? "Play" : "Pause"}
-  </StyledMusicButton>
-);
+const useAudio = (url) => {
+  const [audio] = useState(new Audio(url));
+  const [playing, setPlaying] = useState(false);
 
-const PlayMusic = React.memo(({ isPlayingMusic }) => {
+  const toggle = () => setPlaying(!playing);
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause();
+  }, [playing]);
+
+  useEffect(() => {
+    audio.addEventListener("ended", () => setPlaying(false));
+    return () => {
+      audio.removeEventListener("ended", () => setPlaying(false));
+    };
+  }, []);
+
+  return [playing, toggle];
+};
+
+const MusicButton = () => {
+  const [playing, toggle] = useAudio(Falling);
   return (
-    <Sound
-      url={Falling}
-      playStatus={isPlayingMusic ? Sound.status.PLAYING : Sound.status.PAUSED}
-      loop={true}
-      position={100}
-    />
+    <StyledMusicButton onClick={toggle}>
+      {playing ? (
+        <PauseCircleFilled style={{ fontSize: "40px", color: "#08c" }} />
+      ) : (
+        <PlayCircleFilled style={{ fontSize: "40px", color: "#08c" }} />
+      )}
+    </StyledMusicButton>
   );
-});
+};
 
-export { MusicButton, PlayMusic };
+export { MusicButton };
