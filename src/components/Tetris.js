@@ -16,12 +16,18 @@ import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
 import PauseButton from "./PauseButton";
+import { MusicButton, PlayMusic } from "./MusicButton";
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+
   // Variable to track drop speed for pause
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Variable for tracking play/pause state
+  const [isPlayingMusic, setIsPlayingMusic] = useState(false);
+
   const [curLevelDropTime, setCurLevelDropTime] = useState(null);
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
@@ -58,7 +64,11 @@ const Tetris = () => {
 
     // Flip value of is paused
     setIsPaused(!isPaused);
-    console.log("is paused: ", isPaused);
+  };
+
+  const togglePlayMusic = () => {
+    // Flip value to play or stop
+    setIsPlayingMusic(!isPlayingMusic);
   };
 
   const drop = () => {
@@ -69,7 +79,7 @@ const Tetris = () => {
       const newDropTime = 1000 / (level + 1) + 200;
       setDropTime(newDropTime);
       setCurLevelDropTime(newDropTime);
-  }
+    }
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
@@ -139,6 +149,10 @@ const Tetris = () => {
           )}
           <StartButton callback={startGame} />
           <PauseButton callback={togglePauseGame} isPaused={isPaused} />
+          <MusicButton
+            // callback={togglePlayMusic}
+            // isPlayingMusic={isPlayingMusic}
+          />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
